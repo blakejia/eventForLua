@@ -8,6 +8,7 @@ end
 
 function ClassA:bindEvent()
     self:bind("ClassA.hello", function (...)
+        print("ClassA")
         for k,v in pairs({...}) do
             print(k, v)
         end

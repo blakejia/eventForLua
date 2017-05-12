@@ -1,3 +1,6 @@
+local pl = {
+    tablex = require "pl.tablex"
+}
 local EventSet = class()
 
 function EventSet:init()
@@ -31,12 +34,18 @@ function EventSet:unregisterEvent(event)
 end
 
 function EventSet:call(name, ...)
-    if self.eventSet[name] == nil then
+    local set = self.eventSet[name]
+    if set == nil then
         print(string.format("this event name is unregister : %s", name))
         return
     end
 
-    for _, value in pairs(self.eventSet[name]) do
+    set = pl.tablex.values(set)
+    table.sort(set, function (lh, rh)
+        return lh.event:getPriority() > rh.event:getPriority()
+    end)
+
+    for _, value in ipairs(set) do
         value.event:call(...)
     end
 end

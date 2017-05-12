@@ -5,13 +5,13 @@ function BaseClass:init()
     self.eventList = {}
 end
 
-function BaseClass:bind(key, call)
+function BaseClass:bind(key, call, priority)
     if self.eventList[key] ~= nil then
         print('Dumplicate event name! : ' .. key)
         return
     end
 
-    local event = Event.new(self, key, call)
+    local event = Event.new(self, key, call, priority)
     self.eventList[key] = event
 end
 
